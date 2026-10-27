@@ -1,0 +1,281 @@
+\documentclass[11pt]{book}              % Book class in 11 points
+%\documentclass[justified,twoside]{tufte-book}
+
+
+\parindent0pt  \parskip10pt             % make block paragraphs
+%\raggedright                            % do not right justify
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[round]{natbib}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{tgpagella}
+\usepackage{emptypage}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage[LGR,T1]{fontenc}
+% Minimal, portable Chinese support for the translation workspace.
+% The original book class, Latin text font and mathematics configuration remain unchanged.
+\usepackage[UTF8,scheme=plain,fontset=fandol]{ctex}
+\newcommand{\textgreek}[1]{\begingroup\fontencoding{LGR}\selectfont#1\endgroup}
+\renewcommand{\contentsname}{目录}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\renewcommand{\bibname}{参考文献}
+\renewcommand{\proofname}{证明}
+
+\usepackage{tcolorbox}
+
+
+\usepackage{microtype}
+
+
+\definecolor{echodrk}{HTML}{0099cc}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\usepackage[colorlinks,linkcolor=mymauve,citecolor=echodrk]{hyperref}
+
+\definecolor{boxgray}{rgb}{0.9,0.9,0.9}
+\definecolor{boxpink}{rgb}{0.9,0.7,0.7}
+
+\renewcommand\vec{\mathbf}
+\newcommand\mat{\mathbf}
+
+\makeatletter
+\renewcommand{\thesection}{%
+  \ifnum\c@chapter<1 \@arabic\c@section
+  \else \thechapter.\@arabic\c@section
+  \fi
+}
+\makeatother
+
+
+
+% margin notes
+%\usepackage[top=1.5cm, bottom=1.5cm, outer=5cm, inner=2cm, heightrounded, marginparwidth=2.5cm, marginparsep=2cm]{geometry}
+\usepackage{marginnote}
+\renewcommand*{\marginfont}{\footnotesize} %\justify} <- Taco: including \justify will throw errors.
+
+ \newcommand{\joan}[1]{{\color{green}#1}}
+ \newcommand{\michael}[1]{{\color{magenta}#1}} \newcommand{\taco}[1]{{\color{blue}#1}}
+ \newcommand{\petar}[1]{{\color{cyan}#1}}
+%\newcommand{\joan}[1]{{#1}}
+%\newcommand{\michael}[1]{{#1}}
+%\newcommand{\taco}[1]{{#1}}
+%\newcommand{\petar}[1]{{#1}}
+
+
+\input{math_commands}
+
+\definecolor{olivegreen}{HTML}{006400}
+\definecolor{echoblue}{HTML}{0099CC}
+\definecolor{gold}{HTML}{F09A00}
+\definecolor{vividred}{HTML}{E60B42}
+\definecolor{echonavy}{HTML}{0054B2}
+\definecolor{darkgry}{HTML}{333333}
+\definecolor{echopurple}{HTML}{9400D1}
+
+
+\newcommand*{\horzbar}{\rule[.5ex]{2.5ex}{0.5pt}}
+
+
+\newtheoremstyle{break}
+  {\topsep}{\topsep}%
+  {\itshape}{}%
+  {\bfseries}{}%
+  {\newline}{}%
+%\theoremstyle{break}
+
+\newtheorem{theorem}{定理}
+\newtheorem{remark}{注}
+\newtheorem{example}{例}
+\newtheorem{remarks}{注}
+\newtheorem{consequence}{推论}
+\newtheorem{consequences}{推论}
+
+
+\usepackage{fancyhdr}
+
+\fancypagestyle{plain}{ %
+  \fancyhf{} % remove everything
+  \renewcommand{\headrulewidth}{0pt} % remove lines as well
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\fancypagestyle{fancybook}{%
+    \fancyhf{}%
+    % Note the ## here. It's required because \fancypagestyle is making a macro (\ps@fancybook).
+    % If we just wrote #1, TeX would think that it's the argument to \ps@fancybook, but
+    % \ps@fancybook doesn't take any arguments, so TeX would complain with an error message.
+    % You are not expected to understand this.
+    \renewcommand*{\sectionmark}[1]{ \markright{\thesection\ ##1} }%
+    %\renewcommand*{\chaptermark}[1]{ \markboth{\chaptername\ \thechapter: ##1}{} }%
+    % Increase the length of the header such that the folios 
+    % (typography jargon for page numbers) move into the margin
+    \fancyhfoffset[LE]{6mm}% slightly less than 0.25in
+    \fancyhfoffset[RO]{6mm}%
+    % Put some space and a vertical bar between the folio and the rest of the header
+    \fancyhead[LE]{\thepage\hskip3mm\vrule\hskip3mm BRONSTEIN, BRUNA, COHEN \& VELI\v{C}KOVI\'{C}}%
+    \fancyhead[RO]{\rightmark\hskip3mm\vrule\hskip3mm\thepage}%
+}
+\pagestyle{fancybook}
+
+
+%\usepackage{appendix}
+
+\usepackage[titletoc]{appendix}
+
+
+%\fancyhf[HLE,HRO]{Bruna et al.}
+
+
+
+\title{\bf 几何深度学习 \\
+网格、群、图、测地线与规范}    % Supply information
+\author{Michael M. Bronstein\footnote{Imperial College London / USI IDSIA / Twitter}, Joan Bruna\footnote{New York University}, Taco Cohen\footnote{Qualcomm AI Research。Qualcomm AI Research 是 Qualcomm Technologies, Inc. 发起的研究计划。}, Petar Veli\v{c}kovi\'{c}\footnote{DeepMind}}              %   for the title page.
+\date{\today}                           %   Use current date. 
+
+% Note that book class by default is formatted to be printed back-to-back.
+\begin{document}                        % End of preamble, start of text.
+\frontmatter                            % only in book class (roman page #s)
+\maketitle                              % Print title page.
+{\hypersetup{linkcolor=black}
+\tableofcontents
+}        % Print table of contents
+\mainmatter                             % only in book class (arabic page #s)
+%\part{A Part Heading}                   % Print a "part" heading
+
+
+
+
+\section*{前言}
+\addcontentsline{toc}{section}{前言}
+\sectionmark{前言}
+
+
+自 Euclid 的\emph{《几何原本》}问世以来的近两千年间，“几何”一词\marginnote{
+\includegraphics[width=0.9\linewidth]{figures/ml_erlangen.png}
+一种广为流传的说法认为，Klein 于 1872 年 10 月在就职演说中提出了 Erlangen Programme。Klein 的确做过这样一场演讲（不过是在同年 12 月 7 日），但听众并非数学界人士，内容也主要涉及他的数学教育思想。如今所谓的“Erlangen Programme”，实际上是他为教授任职所准备的研究计划小册子 {\em Vergleichende Betrachtungen über neuere geometrische Forschungen}（《新近几何研究的比较考察》）。见 \cite{tobies2019felix}。
+%, subtitled {\em Programm zum Eintritt in die philosophische Fakultät und den Senat der k. Friedrich-Alexanders-Universität zu Erlangen} (``Program for entry into the Philosophical Faculty and the Senate of the Emperor Friedrich-Alexander University of Erlangen''). 
+%While Erlangen claims the credit, Klein has stayed there for only three years, moving in 1875 to the Technical University of Munich (then called {\em Technische Hochschule}), followed by Leipzig (1880), and finally settling down in Göttingen from 1886 until his retirement. See R. Tobies, Felix Klein—Mathematician, Academic Organizer, Educational Reformer, In: H. G. Weigand et al. (eds) {\em The Legacy of Felix Klein}, Springer, 2019.
+}一直与\emph{欧氏几何}同义，因为当时尚不存在其他类型的几何。
+%
+十九世纪，Lobachevesky、Bolyai、Gauss 和 Riemann 构造出非欧几何的实例，Euclid 的垄断由此终结。
+%
+%By the late nineteenth century however, various alternative non-Euclidean geometries such as hyperbolic-, elliptic- and projective geometry had emerged. 
+%
+到十九世纪末，这些研究已经分化为彼此迥异的领域；数学家和哲学家围绕各种几何的有效性、它们之间的关系以及“唯一真正的几何”究竟是什么展开争论。
+
+
+年轻数学家 Felix Klein 为这一困境指出了出路；他于 1872 年受聘为巴伐利亚小城 Erlangen 的大学教授。在一份后来以\emph{Erlangen Programme} 载入数学史册的研究计划中，Klein 提议把几何视为对{\em 不变量}的研究，即在某类变换下保持不变的性质，而这类变换称为该几何的{\em 对称性}。
+%and used the formalism of group theory. 
+%
+这种方法表明，当时已知的各种几何都可以通过适当选择对称变换来定义，并可用群论语言加以形式化，从而澄清了问题。
+%
+%understood as the study of those and only those properties that are invariant under some group of symmetries associated with the geometry.
+例如，欧氏几何关注长度和角度，因为这些性质在欧氏变换群（旋转和平移）下保持不变；仿射几何则研究平行性，因为这一性质在仿射变换群下保持不变。
+%
+考察各自对应的群，这些几何之间的关系便一目了然：欧氏群是仿射群的子群，而仿射群又是射影变换群的子群。
+%, so certain figures which are Euclidean-equivalent may not be affine- or projectively equivalent.
+
+
+Erlangen Programme 对几何学产生了极其深远的影响。
+此外，它的影响还扩展到其他领域，尤其是物理学：对称性原理使人们能够从对称性的第一性原理推导守恒定律（这一惊人成果称为 Noether 定理），
+甚至能够把基本粒子分类为对称群的不可约表示。
+%
+{\em 范畴论}
+%a formalization of abstract similarities between mathematical structures, 
+如今已遍及纯数学；用其创立者 Samuel Eilenberg 和 Saunders Mac Lane 的话说，它可以“被视为 Klein 的 Erlangen Programme 的延续，因为带有变换群的几何空间被推广为带有映射代数的范畴”。\marginnote{见 \cite{marquis2009category}。}[2\baselineskip]
+
+
+%In mathematics, the Erlangen program ultimately inspired the creation of categories by Eilenberg \& Mac Lane\footnote{Indeed, in the first paper on categories, the authors write that ``This may be regarded as a continuation of the Klein Erlanger Program, in the sense that a geometrical space with its group of transformations is generalized to a category with its algebra of mappings.''}, which are widely prized for their ability to bring forth abstract similarities between mathematical structures and to reveal many ideas as ``just'' a special case of a more general one.
+
+
+在写作本文时，深度学习领域的状况在某种程度上令人联想到十九世纪的几何学。
+针对各类数据的神经网络架构可谓琳琅满目，但统一性原则寥寥无几。
+与过去一样，这使得人们难以理解各种方法之间的关系，并不可避免地导致同一概念在不同应用领域中被反复重新发明和包装。
+%
+对于试图学习这一领域的初学者而言，消化如此大量的重复思想无疑是一场噩梦。
+
+
+本文尝试把 Erlangen Programme 的思想应用于深度学习领域，最终目标是对该领域进行系统化，并“贯通各个要点”。
+%
+我们把这一几何化尝试称为“几何深度学习”；秉承 Felix Klein 的精神，我们提出从对称性与不变性的第一性原理出发，推导不同的归纳偏置以及实现这些偏置的网络架构。
+%
+%more systematic understanding of the landscape of geometric deep learning methods.
+%
+具体而言，我们关注一大类用于分析非结构化集合、网格、图和流形的神经网络，并说明可以把它们统一理解为尊重这些域之结构与对称性的方法。
+%
+%The archetypes of these domains, grid, graphs, groups, and  `four G'
+
+
+我们相信，本文会吸引广泛的深度学习研究者、实践者和爱好者。
+%
+初学者可以把它作为几何深度学习的概览和入门材料。
+%
+经验丰富的深度学习专家或许会发现从基本原理推导熟悉架构的新方法，以及一些出人意料的联系。
+%
+实践者或许能从中获得解决各自领域问题的新见解。
+
+
+现代机器学习发展如此迅速，撰写这类文本的风险在于，它可能尚未问世就已过时并失去意义。由于本文着眼于基础，我们希望所讨论的关键概念能够超越其具体实现\marginnote{“掌握某些原理足以轻易弥补对某些事实的不了解。”\citep{helvetius1759esprit}}——或者用 Claude Adrien Helvétius 的话说，{\em ``la connaissance de certains principes supplée facilement à la connoissance de certains faits.'' }
+
+%
+
+\section*{记号}
+\addcontentsline{toc}{section}{记号}
+\sectionmark{记号}
+
+\begin{minipage}{\textwidth}
+\def\arraystretch{1.5}
+\begin{tabular}{lp{3.25in}}
+$\Omega,u$ & 域，域上的点\\
+$x(u) \in \mathcal{X}(\Omega,\mathcal{C})$ & 域上的信号，形式为 $x:\Omega\rightarrow \mathcal{C}$\\
+$f(x) \in \mathcal{F}(\mathcal{X}(\Omega))$ & 作用于域上信号的函数，形式为 $f:\mathcal{X}(\Omega) \rightarrow \mathcal{Y}$\\
+%
+$\fG,\fg$ & 群，群元素\\
+$\fg.u, \rho(\fg)$ & 群作用，群表示\\
+%
+$\vec{X}\in\mathcal{C}^{|\Omega|\times s}$ & 表示离散域上信号的矩阵\\
+$\vec{x}_u\in\mathcal{C}^{s}$ & 表示离散域信号 $\vec{X}$ 在元素 $u\in\Omega$ 上取值的向量\\
+$x_{uj}\in\mathcal{C}$ & 表示第 $j$ 个分量的标量，该分量属于离散域信号 $\vec{X}$ 在元素 $u\in\Omega$ 上的取值\\
+$\vec{F}(\vec{X})$ & 作用于离散域信号并以矩阵形式返回另一离散域信号的函数\\
+%
+$\tau:\Omega\rightarrow\Omega$ & 域的自同构\\
+$\eta:\Omega\rightarrow\Omega'$ & 两个不同域之间的同构\\
+$\sigma: \mathcal{C}\rightarrow\mathcal{C}'$ & 激活函数（逐点非线性）\\
+%
+$G=(\mathcal{V},\mathcal{E})$ & 具有节点 $\mathcal{V}$ 和边 $\mathcal{E}$ 的图\\
+$\mathcal{T}=(\mathcal{V},\mathcal{E},\mathcal{F})$ & 具有节点 $\mathcal{V}$、边 $\mathcal{E}$ 和面 $\mathcal{F}$ 的网格\\
+%
+$x\star \theta$ & 与滤波器 $\theta$ 的卷积\\
+$S_v$ & 移位算子\\
+%
+$\varphi_i$ & 基函数\\
+%
+%
+$T_u\Omega, T\Omega$ & $u$ 处的切空间，切丛\\
+$X \in T_u\Omega$ & 切向量\\
+$g_u(X,Y) = \langle X, Y\rangle_u$ & Riemann 度量\\
+%
+$\ell(\gamma), \ell_{uv}$ & 曲线 $\gamma$ 的长度，边 $(u,v)$ 上的离散度量\\
+
+\end{tabular}
+\end{minipage}
+\pagebreak
+
+\input{introduction}
+
+% Chinese-reader supplement: not part of the English source manuscript.
+\renewcommand{\appendixname}{附录}
+\appendix
+\input{appendix/math-primer}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+
+
+
+
+\end{document}                          % The required last line

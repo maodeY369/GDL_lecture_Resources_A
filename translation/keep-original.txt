@@ -1,0 +1,303 @@
+Adam
+AlexNet
+API
+BERT
+BibTeX
+CIFAR-10
+CNN
+CUDA
+CV
+DGCNN
+Deep Sets
+DNN
+EM
+FM
+GAN
+GAT
+GDL
+Geodesic CNN
+GIN
+GNN
+GPT
+GPU
+GraphSAGE
+GRU
+ImageNet
+LSTM
+MAP
+MATLAB
+MCMC
+MLE
+MLP
+MoNet
+NLP
+NumPy
+ODE
+PCA
+PlotNeuralNet
+PointNet
+PyTorch
+ReLU
+ResNet
+RL
+RNN
+SGD
+SimpleRNN
+SVM
+TensorFlow
+Transformer
+U-Net
+VAE
+ViT
+WL
+XeLaTeX
+LaTeX
+seq2seq
+softmax
+Anisotropic CNN
+Clebsch-Gordan
+DNA
+Fast Marching
+Fourier
+Graph Transformer
+Laplacian
+Lie
+LieConv
+LieTransformer
+Neocognitron
+Neural ODE
+PDE
+PixelRNN
+Tensor Field Networks
+Wigner D-functions
+Wigner D-matrix
+one-hot
+set2set
+3D Steerable
+DimeNet
+Dynamic Graph
+SchNet
+Lipschitz
+Sobolev
+Bayesian
+Banach
+Erlangen Programme
+Petar
+Cambridge
+Pietro
+Michael
+Oxford
+Xiaowen Dong
+Imperial College
+Michael Huth
+Daniel Rueckert
+Andreas Maier
+Friedrich-Alexander-Universit
+Yoshua Bengio
+Charles Blundell
+Andreea Deac
+Fabian Fuchs
+Francesco di Giovanni
+Marco Gori
+Raia Hadsell
+Will Hamilton
+Maksym Korablyov
+Christian Merkwirth
+Razvan Pascanu
+Bruno Ribeiro
+Anna Scaife
+Jürgen Schmidhuber
+Marwin Segler
+Corentin Tallec
+Ngân Vũ
+Peter Wirnsberger
+David Wong
+Abel
+Niels Henrik Abel
+Hilbert
+Cayley
+Lie
+Riemann
+Gromov-Hausdorff
+Haar
+Dirichlet
+Fast Multipole Method
+FMM
+MRA
+QAP
+Folkman graph
+Killing
+Wilhelm Killing
+Caltech Electric Analog Computer
+Schwarzscher Stiefel
+Schwarz's boot
+Schwarz lantern
+Cauchy--Schwarz
+Hermann Schwarz
+Möbius
+Dirac
+Steklov
+Salix alba
+Escherichia coli
+Halicin
+Albert-L
+szl
+Barab
+Emil Fischer
+Schl
+ssel-Schloss-Prinzip
+MaSIF
+PD-L1
+Protein Data Bank
+PPI
+Pinterest
+PinSage
+PinnerSage
+Alibaba
+Aligraph
+Amazon
+P-Companion
+Fabula AI
+Twitter
+ETA
+Google Maps
+Sydney
+DeepMind
+Baidu Maps
+ConSTGAT
+ILSVRC
+VGG-16
+Inception
+ResNets
+dropout
+AlphaGo
+Monte Carlo
+Lee Sedol
+AlphaGo Zero
+AlphaZero
+MuZero
+Atari 2600
+WaveNet
+Convolutional Kernels Networks
+Euclidean
+Mercer
+Neural Tangent Kernels
+Plancherel
+Bronstein
+Bruna
+Cohen
+Veličković
+USI IDSIA
+London
+New York University
+Qualcomm AI Research
+Qualcomm Technologies, Inc.
+Vergleichende Betrachtungen über neuere geometrische Forschungen
+Lobachevesky
+Bolyai
+Gauss
+Euclid
+Samuel Eilenberg
+Saunders Mac Lane
+Claude Adrien Helvétius
+la connaissance de certains principes supplée facilement à la connoissance de certains faits.
+Joan
+Taco
+Veli
+Kovi
+Geodesic CNNs
+Geodesics
+WaveRNN
+Google Assistant
+Google Duo
+EHR
+MIMIC-III
+eICU
+Large Hadron Collider
+CERN
+Hamilton
+Lagrange
+Lorentz
+Ariel AI
+Snap
+OpenAI
+GPT-3
+R-CNN
+SegNet
+DeepSet
+Dynamic Graph CNN
+IceCube
+Big Bang
+CVPR
+muon
+Hermann
+Princeton Institute for Advanced Study
+Weyl
+Sumerian
+Pythagoreans
+Plato
+Johannes Kepler
+Kepler
+Strena, Seu De Nive Sexangula
+Johannes Matthäus Wackher von Wackenfels
+Sophus
+Felix Klein
+Klein
+Cartan
+ottingen
+Emmy Noether
+Noether
+Frank Wilczek
+gauge
+Eich
+Standard Model
+Shun'ichi Amari
+David Hubel
+Torsten Wiesel
+Roger Sperry
+Alessandro Sperduti
+Labeling RAAM
+Alessio Micheli
+Universit
+degli Studi di Siena
+Franco Scarselli
+Gated GNN
+GGNN
+DeepWalk
+node2vec
+LINE
+Planetoid
+Variational Graph Autoencoder
+VGAE
+Deep Graph Informax
+DGI
+GRACE
+BGRL
+PGM
+structure2vec
+Markov
+Graph Isomorphism Network
+Principal Neighbourhood Aggregation
+PNA
+Pierre Vandergheynst
+Jos
+Moura
+GSP
+Roee Litman
+Alex Bronstein
+Stanford
+Leo Guibas
+Geodesic CNN
+Geodesics
+neural Turing machine
+differentiable neural computer
+neural GPU
+neural RAM
+neural programmer-interpreters
+neural arithmetic-logic units
+neural execution engines
+ERC
+IEEE Signal Processing Magazine
+Max Welling
+ELLIS
+4G: Grids, Graphs, Groups, and Gauges

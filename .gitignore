@@ -1,0 +1,17 @@
+# LaTeX build products
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.xdv
+build/
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+*.swp

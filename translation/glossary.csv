@@ -1,0 +1,205 @@
+source_term,target_term,keep_original,domain,notes,first_location,status
+Geometric Deep Learning,几何深度学习,false,machine_learning,标题核心术语,main.tex:title,approved
+geometric domain,几何域,false,geometry,domain 统一译为“域”,introduction.tex,approved
+inductive bias,归纳偏置,false,machine_learning,保持模态和上下文限定,introduction.tex,approved
+invariance,不变性,false,geometry,性质名词,introduction.tex,approved
+equivariance,等变性,false,geometry,性质名词,introduction.tex,approved
+symmetry group,对称群,false,group_theory,,geometricpriors.tex,approved
+group action,群作用,false,group_theory,,geometricpriors.tex,approved
+group representation,群表示,false,group_theory,,geometricpriors.tex,approved
+convolutional neural network,卷积神经网络,false,machine_learning,有全称时翻译；CNN 保持,geometricmodels.tex:15,approved
+graph neural network,图神经网络,false,machine_learning,有全称时翻译；GNN 保持,geometricmodels.tex:320,approved
+recurrent neural network,循环神经网络,false,machine_learning,有全称时翻译；RNN 保持,geometricmodels.tex:689,approved
+Long Short-Term Memory,长短期记忆,false,machine_learning,LSTM 保持,geometricmodels.tex:788,approved
+feature map,特征图,false,machine_learning,,geometricmodels.tex:42,approved
+activation function,激活函数,false,machine_learning,,geometricmodels.tex:63,approved
+receptive field,感受野,false,machine_learning,,geometricmodels.tex:73,approved
+pooling,池化,false,machine_learning,,geometricmodels.tex:77,approved
+residual network,残差网络,false,machine_learning,ResNet 保持,geometricmodels.tex:98,approved
+batch normalisation,批归一化,false,machine_learning,采用英式 spelling 对应术语,geometricmodels.tex:112,approved
+data augmentation,数据增强,false,machine_learning,,geometricmodels.tex:118,approved
+group convolution,群卷积,false,group_theory,,geometricmodels.tex:197,approved
+message passing,消息传递,false,graph_learning,,geometricmodels.tex:320,approved
+permutation invariant,置换不变,false,graph_learning,,geometricmodels.tex:320,approved
+permutation equivariant,置换等变,false,graph_learning,,geometricmodels.tex:320,approved
+attention mechanism,注意力机制,false,machine_learning,,geometricmodels.tex:480,approved
+irreducible representation,不可约表示,false,representation_theory,,geometricmodels.tex:547,approved
+regular representation,正则表示,false,representation_theory,,geometricmodels.tex:552,approved
+gauge equivariance,规范等变性,false,differential_geometry,gauge 译为“规范”,geometricmodels.tex:516,approved
+geodesic patch,测地斑块,false,differential_geometry,patch 统一为“斑块”,geometricmodels.tex:569,approved
+isotropic filter,各向同性滤波器,false,signal_processing,,geometricmodels.tex:586,approved
+time warping,时间扭曲,false,sequence_models,不采用“时间规整”以免与 DTW 算法混淆,geometricmodels.tex:830,approved
+vanishing gradient,梯度消失,false,machine_learning,,geometricmodels.tex:774,approved
+sequence-to-sequence,序列到序列,false,machine_learning,seq2seq 保持,geometricmodels.tex:894,approved
+circulant matrix,循环矩阵,false,linear_algebra,,geometricmodels.tex:24,approved
+directional derivative,方向导数,false,calculus,,geometricmodels.tex:46,approved
+normalisation,归一化,false,machine_learning,batch normalisation 译为“批归一化”,geometricmodels.tex:112,approved
+homogeneous space,齐性空间,false,group_theory,,geometricmodels.tex:188,approved
+reverse-complement symmetry,反向互补对称性,false,bioinformatics,,geometricmodels.tex:234,approved
+spherical harmonics,球谐函数,false,harmonic_analysis,,geometricmodels.tex:294,approved
+homophilous graph,同配图,false,graph_learning,,geometricmodels.tex:404,approved
+soft adjacency matrix,软邻接矩阵,false,graph_learning,,geometricmodels.tex:490,approved
+positional encoding,位置编码,false,machine_learning,,geometricmodels.tex:501,approved
+latent graph inference,潜在图推断,false,graph_learning,,geometricmodels.tex:512,approved
+eikonal equation,程函方程,false,differential_geometry,,geometricmodels.tex:581,approved
+patch operator,斑块算子,false,geometric_learning,,geometricmodels.tex:619,approved
+parallel transport,平行输运,false,differential_geometry,,geometricmodels.tex:657,approved
+fixed point,不动点,false,analysis,,geometricmodels.tex:756,approved
+contraction mapping,压缩映射,false,analysis,,geometricmodels.tex:766,approved
+memory cell,记忆单元,false,machine_learning,,geometricmodels.tex:801,approved
+forget gate,遗忘门,false,machine_learning,,geometricmodels.tex:810,approved
+chrono initialisation,时间尺度初始化,false,machine_learning,采用含义明确的学术译名,geometricmodels.tex:892,approved
+representation learning,表示学习,false,machine_learning,,introduction.tex,approved
+feature learning,特征学习,false,machine_learning,,introduction.tex,approved
+backpropagation,反向传播,false,machine_learning,,introduction.tex,approved
+regularisation,正则化,false,machine_learning,采用英式 spelling 对应术语,introduction.tex,approved
+interpolating regime,插值状态,false,statistical_learning,,introduction.tex,approved
+Universal Approximation Theorem,通用逼近定理,false,approximation_theory,,introduction.tex,approved
+Banach space,Banach 空间,false,functional_analysis,Banach 保持英文,introduction.tex,approved
+weight decay,权重衰减,false,machine_learning,,introduction.tex,approved
+path-norm,路径范数,false,machine_learning,,introduction.tex,approved
+Structural Risk Minimisation,结构风险最小化,false,statistical_learning,,introduction.tex,approved
+curse of dimensionality,维数灾难,false,statistical_learning,,introduction.tex,approved
+Maximum Discrepancy,最大差异,false,statistical_learning,,introduction.tex,approved
+Hilbert space,Hilbert 空间,false,functional_analysis,Hilbert 保持英文,geometricpriors.tex:12,approved
+scale separation,尺度分离,false,geometric_deep_learning,,geometricpriors.tex:7,approved
+group generator,群生成元,false,group_theory,,geometricpriors.tex,approved
+Abelian group,Abel 群,false,group_theory,采用常用译名且 Abel 保持英文,geometricpriors.tex:136,approved
+Cayley diagram,Cayley 图,false,group_theory,Cayley 保持英文,geometricpriors.tex,approved
+homeomorphism,同胚,false,topology,,geometricpriors.tex,approved
+diffeomorphism,微分同胚,false,differential_geometry,,geometricpriors.tex,approved
+isometry,等距变换,false,geometry,,geometricpriors.tex,approved
+metric space,度量空间,false,geometry,,geometricpriors.tex,approved
+isomorphism,同构,false,algebra,,geometricpriors.tex,approved
+automorphism,自同构,false,algebra,,geometricpriors.tex,approved
+deformation stability,形变稳定性,false,geometric_deep_learning,,geometricpriors.tex,approved
+Dirichlet energy,Dirichlet 能量,false,analysis,Dirichlet 保持英文,geometricpriors.tex,approved
+graph edit distance,图编辑距离,false,graph_theory,,geometricpriors.tex,approved
+Gromov-Hausdorff distance,Gromov-Hausdorff 距离,false,metric_geometry,Gromov-Hausdorff 保持英文,geometricpriors.tex:678,approved
+wavelet,小波,false,harmonic_analysis,,geometricpriors.tex,approved
+mother wavelet,母小波,false,harmonic_analysis,,geometricpriors.tex,approved
+wavelet atom,小波原子,false,harmonic_analysis,,geometricpriors.tex,approved
+coarse graining,粗粒化,false,multiscale_analysis,,geometricpriors.tex,approved
+Haar measure,Haar 测度,false,harmonic_analysis,Haar 保持英文,geometricpriors.tex,approved
+local pooling,局部池化,false,deep_learning,,geometricpriors.tex,approved
+global pooling,全局池化,false,deep_learning,,geometricpriors.tex,approved
+shift-invariance,平移不变性,false,harmonic_analysis,,geometricpriors.tex,approved
+shift-equivariance,平移等变性,false,harmonic_analysis,,geometricpriors.tex,approved
+multiresolution analysis,多分辨率分析,false,harmonic_analysis,,geometricpriors.tex,approved
+adjacency matrix,邻接矩阵,false,graph_theory,,geometricdomains.tex:49,approved
+circulant matrix,循环矩阵,false,linear_algebra,,geometricdomains.tex:412,approved
+translation operator,平移算子,false,harmonic_analysis,,geometricdomains.tex:590,approved
+homogeneous space,齐性空间,false,geometry,,geometricdomains.tex:615,approved
+group convolution,群卷积,false,harmonic_analysis,,geometricdomains.tex:670,approved
+Riemannian manifold,Riemann 流形,false,differential_geometry,Riemann 保持英文,geometricdomains.tex:945,approved
+tangent space,切空间,false,differential_geometry,,geometricdomains.tex:1009,approved
+tangent bundle,切丛,false,differential_geometry,,geometricdomains.tex:1064,approved
+Riemannian metric,Riemann 度量,false,differential_geometry,Riemann 保持英文,geometricdomains.tex:1161,approved
+scalar field,标量场,false,differential_geometry,,geometricdomains.tex:1331,approved
+vector field,向量场,false,differential_geometry,,geometricdomains.tex:1345,approved
+intrinsic gradient,内蕴梯度,false,differential_geometry,,geometricdomains.tex:1682,approved
+geodesic,测地线,false,differential_geometry,,geometricdomains.tex:1717,approved
+exponential map,指数映射,false,differential_geometry,,geometricdomains.tex:1776,approved
+geodesic distance,测地距离,false,differential_geometry,,geometricdomains.tex:1799,approved
+pushforward,前推,false,differential_geometry,,geometricdomains.tex:1932,approved
+pullback,拉回,false,differential_geometry,,geometricdomains.tex:1936,approved
+Laplace-Beltrami operator,Laplace-Beltrami 算子,false,differential_geometry,Laplace-Beltrami 保持英文,geometricdomains.tex:1987,approved
+spectral convolution,谱卷积,false,geometric_deep_learning,,geometricdomains.tex:2071,approved
+spatial convolution,空间卷积,false,geometric_deep_learning,,geometricdomains.tex:2173,approved
+gauge symmetry,规范对称性,false,gauge_theory,,geometricdomains.tex:2668,approved
+structure group,结构群,false,gauge_theory,,geometricdomains.tex:2481,approved
+vector bundle,向量丛,false,differential_geometry,,geometricdomains.tex:2468,approved
+fibre,纤维,false,differential_geometry,采用英式拼写 fibre,geometricdomains.tex:2468,approved
+gauge equivariance,规范等变性,false,gauge_theory,,geometricdomains.tex:2683,approved
+gauge-equivariant convolution,规范等变卷积,false,gauge_theory,,geometricdomains.tex:2748,approved
+simplicial complex,单纯复形,false,topology,,geometricdomains.tex:2782,approved
+manifold mesh,流形网格曲面,false,geometry_processing,,geometricdomains.tex:2796,approved
+cotangent formula,余切公式,false,geometry_processing,,geometricdomains.tex:2869,approved
+combinatorial Laplacian,组合 Laplacian,false,graph_theory,,geometricdomains.tex:2863,approved
+functional map,函数映射,false,geometry_processing,,geometricdomains.tex:3045,approved
+remeshing invariance,重网格化不变性,false,geometry_processing,,geometricdomains.tex:3086,approved
+area-preserving,保面积,false,geometry_processing,,geometricdomains.tex:3066,approved
+rational filter,有理滤波器,false,signal_processing,,geometricdomains.tex:2977,approved
+Cayley transform,Cayley 变换,false,complex_analysis,Cayley 保持英文,geometricdomains.tex:2979,approved
+drug development,药物开发,false,computational_chemistry,,geometricapplications.tex:11,approved
+virtual screening,虚拟筛选,false,computational_chemistry,,geometricapplications.tex:28,approved
+drug repositioning,药物再定位,false,computational_chemistry,,geometricapplications.tex:42,approved
+combinatorial therapy,组合疗法,false,medicine,,geometricapplications.tex:51,approved
+polypharmacy,多重用药,false,medicine,,geometricapplications.tex:51,approved
+contact graph,接触图,false,structural_biology,,geometricapplications.tex:75,approved
+protein folding,蛋白质折叠,false,structural_biology,,geometricapplications.tex:73,approved
+protein function prediction,蛋白质功能预测,false,structural_biology,,geometricapplications.tex:73,approved
+recommender system,推荐系统,false,machine_learning,,geometricapplications.tex:85,approved
+link prediction,链接预测,false,graph_learning,,geometricapplications.tex:85,approved
+estimated time of arrival,预计到达时间,false,transportation,ETA 保持英文,geometricapplications.tex:94,approved
+graph regression,图回归,false,graph_learning,,geometricapplications.tex:96,approved
+object recognition,物体识别,false,computer_vision,,geometricapplications.tex:98,approved
+transfer learning,迁移学习,false,machine_learning,,geometricapplications.tex:98,approved
+object detection,物体检测,false,computer_vision,,geometricapplications.tex:102,approved
+semantic segmentation,语义分割,false,computer_vision,,geometricapplications.tex:102,approved
+reinforcement learning,强化学习,false,machine_learning,RL 保持英文,geometricapplications.tex:104,approved
+policy,策略,false,reinforcement_learning,,geometricapplications.tex:106,approved
+value function,价值函数,false,reinforcement_learning,,geometricapplications.tex:106,approved
+dilated convolution,空洞卷积,false,deep_learning,,geometricapplications.tex:118,approved
+self-attention,自注意力,false,deep_learning,,geometricapplications.tex:120,approved
+electronic health record,电子健康记录,false,medicine,EHR 保持英文,geometricapplications.tex:168,approved
+functional network,功能网络,false,neuroscience,,geometricapplications.tex:150,approved
+patient network,患者网络,false,medicine,,geometricapplications.tex:158,approved
+particle jet,粒子喷注,false,particle_physics,,geometricapplications.tex:180,approved
+multi-messenger astronomy,多信使天文学,false,astrophysics,,geometricapplications.tex:203,approved
+shape correspondence,形状对应,false,computer_graphics,,geometricapplications.tex:236,approved
+Noether theorem,Noether 定理,false,mathematical_physics,Noether 保持英文,historic.tex:36,approved
+gauge invariance,规范不变性,false,gauge_theory,,historic.tex:42,approved
+statistical manifold,统计流形,false,information_geometry,,historic.tex:71,approved
+probabilistic graphical model,概率图模型,false,probabilistic_modelling,PGM 保持英文,historic.tex:132,approved
+random variable,随机变量,false,probability,,historic.tex:135,approved
+conditional independence,条件独立,false,probability,,historic.tex:135,approved
+mean-field inference,平均场推断,false,probabilistic_modelling,,historic.tex:135,approved
+belief propagation,信念传播,false,probabilistic_modelling,,historic.tex:135,approved
+graph isomorphism,图同构,false,graph_theory,,historic.tex:143,approved
+Weisfeiler-Lehman test,Weisfeiler--Lehman 检验,false,graph_theory,WL 保持英文,historic.tex:145,approved
+graph kernel,图核,false,graph_learning,,historic.tex:145,approved
+injective aggregation,单射聚合,false,graph_learning,,historic.tex:149,approved
+higher-order method,高阶方法,false,graph_learning,,historic.tex:153,approved
+anchor node set,锚节点集合,false,graph_learning,,historic.tex:165,approved
+topological data analysis,拓扑数据分析,false,topology,,historic.tex:165,approved
+scattering transform,散射变换,false,harmonic_analysis,,historic.tex:174,approved
+graph signal processing,图信号处理,false,signal_processing,GSP 保持英文,historic.tex:192,approved
+shape descriptor,形状描述符,false,computer_graphics,,historic.tex:200,approved
+algorithmic reasoning,算法推理,false,machine_learning,,historic.tex:232,approved
+precondition,前置条件,false,algorithms,,historic.tex:235,approved
+postcondition,后置条件,false,algorithms,,historic.tex:235,approved
+algorithmic alignment,算法对齐,false,machine_learning,,historic.tex:241,approved
+extrapolation,外推,false,machine_learning,,historic.tex:245,approved
+causal reasoning,因果推理,false,causal_inference,,historic.tex:245,approved
+geometric stability,几何稳定性,false,geometric_deep_learning,,geometricstability.tex:1,approved
+Euclidean metric,Euclidean 度量,false,geometry,Euclidean 按既定保留规则保留,geometricstability.tex:149,approved
+additive noise,加性噪声,false,robustness,,geometricstability.tex:154,approved
+adversarial example,对抗样本,false,robustness,复数形式沿用同一译名,geometricstability.tex:158,approved
+extrinsic deformation,外在形变,false,differential_geometry,,geometricstability.tex:169,approved
+metric change,度量变化,false,metric_geometry,,geometricstability.tex:181,approved
+kernel method,核方法,false,machine_learning,复数形式沿用同一译名,geometricstability.tex:190,approved
+reproducing property,再生性质,false,functional_analysis,,geometricstability.tex:179,approved
+positive definite kernel,正定核,false,kernel_methods,,geometricstability.tex:182,approved
+translation invariant representation,平移不变表示,false,signal_processing,,geometricstability.tex:323,approved
+Power Spectra,功率谱,false,signal_processing,标题中的复数形式,geometricstability.tex:320,approved
+autocorrelation,自相关,false,signal_processing,,geometricstability.tex:376,approved
+registration invariant,配准不变量,false,signal_processing,复数形式沿用同一译名,geometricstability.tex:320,approved
+Fourier modulus,Fourier 模,false,signal_processing,Fourier 保持英文,geometricstability.tex:323,approved
+canonical invariant,典范不变量,false,geometry,,geometricstability.tex:398,approved
+Lipschitz continuous,Lipschitz 连续,false,analysis,Lipschitz 保持英文,geometricstability.tex:323,approved
+lattice,格,false,discrete_geometry,"本附录指由基向量生成的平移格，不指序理论中的 lattice",appendix/math-primer.tex,approved
+regular grid,规则网格,false,discrete_geometry,,appendix/math-primer.tex,approved
+surface mesh,网格曲面,false,geometry_processing,"几何处理语境；与规则图像网格区分",appendix/math-primer.tex,approved
+coordinate chart,坐标图,false,differential_geometry,,appendix/math-primer.tex,approved
+embedding space,嵌入空间,false,differential_geometry,,appendix/math-primer.tex,approved
+intrinsic quantity,内蕴量,false,differential_geometry,,appendix/math-primer.tex,approved
+extrinsic quantity,外在量,false,differential_geometry,,appendix/math-primer.tex,approved
+tangent vector,切向量,false,differential_geometry,,appendix/math-primer.tex,approved
+graph Laplacian,图 Laplacian,false,graph_signal_processing,Laplacian 保持英文,appendix/math-primer.tex,approved
+graph Fourier representation,图 Fourier 表示,false,graph_signal_processing,Fourier 保持英文,appendix/math-primer.tex,approved
+gauge transformation,规范变换,false,gauge_theory,,appendix/math-primer.tex,approved
+Lipschitz condition,Lipschitz 条件,false,analysis,Lipschitz 保持英文,appendix/math-primer.tex,approved
+degree matrix,度矩阵,false,graph_theory,,appendix/math-primer.tex,approved
+node relabeling,节点重编号,false,graph_theory,,appendix/math-primer.tex,approved
+local coordinate frame,局部坐标标架,false,differential_geometry,"沿用 geometricmodels.tex 的既定译法",appendix/math-primer.tex,approved

@@ -1,0 +1,376 @@
+\section{几何稳定性}
+\label{sec:geometry}
+
+本节描述信号表示中的几何稳定性概念。首先从 Euclidean 设置开始（第 \ref{sec:euclideangeom} 小节），其中这种稳定性用信号域的微分同胚表示。随后，第 \ref{sec:noneuclideanstab} 小节讨论如何把这一概念推广到一般度量域，再说明若干标准高维信号表示在几何稳定性方面的局限（第 \ref{sec:geomexamples} 小节）。
+
+
+% This section reviews some of the 
+% existing tools for signal representation and
+% discrimination in recognition tasks. 
+% Invariance and stability are formulated 
+% in terms of Lipschitz continuity conditions, 
+% and are then studied on a variety of
+% representations.
+
+\subsection{Euclidean 几何稳定性}
+\label{sec:euclideangeom}
+%define the problems at hand. 
+考虑一个紧致的 $d$ 维 Euclidean 域 $\Omega = [0,1]^d \subset \mathbb{R}^d$，其上定义了
+平方可积函数 $\bbx\in L^2(\Omega)$（例如，在图像分析应用中，图像可以视为单位正方形 $\Omega = [0,1]^2$ 上的函数）。
+%
+考虑一个一般的监督学习设置，其中在训练集上观测未知函数
+$f : ~ L^2(\Omega) \to \mathcal{Y}$：
+%\begin{equation}
+$\{ \bbx_i \in L^2(\Omega), f_i = f(\bbx_i) \}_{i \in \mathcal{I}}.$ 
+%\end{equation} 
+%
+% In a supervised classification setting, the target space $\mathcal{Y}$ can be thought discrete with $| \mathcal{Y} |$ being 
+% the number of classes, 
+%  In a {\em multiple object recognition} setting, we can replace $\mathcal{Y}$ by the $K$-dimensional simplex, 
+%  which represents the posterior class probabilities $p( y | x)$. 
+% %
+% In {\em regression} tasks, we may consider $\mathcal{Y}=\mathbb{R}^m$. 
+% %
+% %$y$ is often referred to as {\em label}. 
+在绝大多数计算机视觉与语音分析任务中，
+未知函数 $f$ 满足一些关键的正则性质，
+这些性质用信号域 $\Omega$ 表示。
+%prior information 
+%prior assumptions on the unknown function $y$. 
+%
+%As we will see in the following, these assumptions are effectively exploited by convolutional neural network architectures. 
+% that is effectively exploited by Convolutional Neural Network architectures. 
+%We will now describe these priors mathematically with the objective of extending them to non-Euclidean 
+%domains later on. 
+
+%First, many tasks are presumed to enjoy 
+{{\em 全局平移不变性：}}
+令
+%\begin{equation}
+${\cal T}_v \bbx(u) = \bbx(u - v), \hspace{3mm} u, v \in \Omega,$ 
+%\end{equation}
+%$T_v$ for some $v \in \mathbb{R}^d$ 
+为\emph{平移算子}\footnote{
+这里假定周期边界条件，
+以保证该运算在 $L^2(\Omega)$ 上良定义。
+}，它作用于函数 $\bbx \in L^2(\Omega)$。%as
+%$T_v f(x) = f(x - v)$ for 
+%
+第一个假设是：根据任务不同，函数 $f$ 对平移或者是\emph{不变的}，即 $f({\cal T}_v \bbx) = f(  \bbx) $ 对任意 $\bbx \in L^2(\Omega)$ 和 $v\in \Omega$ 都成立；或者是\emph{等变的}，即 $f({\cal T}_v \bbx) = {\cal T}_v f(\bbx)$。
+平移不变性常见于物体分类任务；当模型输出所在的空间可由平移作用时，则会出现等变性（例如物体定位、
+语义分割或运动估计问题）。
+ 
+全局不变性/等变性的概念可以
+很容易推广到平移之外的其他变换群。第 \ref{sec:rigid} 节讨论了其中一种推广，即由 $\Omega$ 中平移与旋转生成的刚体运动群。
+ 
+%Our definition of invariance should
+%not be confused with the traditional notion of \emph{translation invariant systems} in signal processing, 
+%which corresponds to translation equivariance in our language (since the output translates whenever the input translates).
+% Equivalently, we can describe this property in terms of the statistics of natural images. 
+% If one considers that natural images are drawn from an underlying probability distribution, 
+% the invariance/equivariance property implies that this distribution describes a stationary source \cite{simoncelli2001natural} in the 
+
+然而，面对高维估计时，全局不变性并不是一个强先验。事实上，全局变换群通常是低维的；尤其在信号处理中，它们往往对应于仿射群 $\mathrm{Aff}(\Omega)$ 的子群，其维数为 $O(d^2)$。通过规定函数 $f$ 在域的几何扰动下如何变化，可以定义强得多的先验；这里的扰动与这些全局变换群“相近”。
+
+{{\em 局部形变与尺度分离：}}
+具体而言，给定光滑向量场 $\tau: \Omega \to \Omega$，由 $\tau$ 给出的形变按照下式作用于 $L^2(\Omega)$：
+$\bbx_\tau(u) := \bbx(u -\tau(u))$。形变可以建模局部平移、视角变化、旋转和
+频率移位 \cite{bruna2013invariant}，并已在计算机视觉中广泛用作图像变化性的模型
+\cite{jain1996object, felzenszwalb2010object, girshick2014rich}.
+% Similarly, a deformation ${\cal L}_\tau$, where $\tau: \Omega \to \Omega$ is a smooth vector field,  acts on $L^2(\Omega)$ as 
+% ${\cal L}_\tau f(u) = f(u -\tau(u))$. Deformations can model local translations, changes in point of view, rotations and
+% frequency transpositions \cite{bruna2013invariant}. 
+计算机视觉研究的大多数任务不仅具有平移不变性/等变性，而且对局部形变保持稳定 \cite{mallat2016understanding,bruna2013invariant}。在平移不变任务中，这一先验可以非正式地表示为
+\begin{equation}
+\label{deformstab}
+| f( \bbx_\tau) - f( \bbx) | \approx \| \tau \|,
+\end{equation}
+对所有 $\bbx, \tau$ 都成立。
+这里，$\| \tau \| $ 度量相应微分同胚 $\varphi(u):= u - \tau(u)$ 到平移群的距离；下一节将说明如何在微分同胚空间中规定这一度量。换言之，
+如果输入图像发生轻微形变，待预测目标不会显著变化。
+%
+在平移等变任务中，则有 $| f( \bbx_\tau ) -  f_\tau( \bbx) | \approx \|  \tau \| $
+%  \begin{equation}
+%  | y( {\cal L}_\tau f) - {\cal L}_\tau y( f) | \approx \| \nabla \tau \|.
+%  \end{equation}
+。
+形变稳定性比全局不变性强得多，因为局部形变空间是高维的，
+而全局不变量的群并非如此。
+
+% It follows from (\ref{deformstab}) that we can extract sufficient statistics at a lower spatial resolution by 
+% downsampling demodulated localized filter responses without losing approximation power. 
+如下文所示，（\ref{deformstab}）的一个关键推论是，可以把长程依赖分解为多尺度
+局部相互作用项，从而得到空间分辨率逐步降低的层次模型。
+为说明这一原理，
+记
+ \begin{equation}
+q(z_1, z_2;v) = \mathrm{Prob}( \bbx(u) = z_1 \,\,\, \mathrm{and} \,\,\, \bbx(u+v)=z_2)
+ \end{equation}
+为相距偏移量 $v$ 的两个图像像素的联合分布；这里假定自然图像服从平稳统计模型（因此 $q$ 不依赖位置 $u$）。
+存在长程依赖时，对任意 $v$，该联合分布都不可分离。然而，形变稳定性先验指出，$q(z_1, z_2; v) \approx q(z_1, z_2; v(1+\epsilon))$ 对较小的 $\epsilon$ 成立。换言之，虽然自然图像中确实存在对物体识别至关重要的长程依赖，却可以在不同尺度上捕获这些依赖并对其下采样。
+计算机视觉领域已经在 CNN 之外的模型中利用这种局部形变稳定性原理；例如下文将回顾的可形变部件模型 \cite{felzenszwalb2010object}。
+% are graphical models that incorporate 
+%a similar prior in their model specification. 
+实践中，Euclidean 域 $\Omega$ 用含 $n$ 个点的规则网格离散化；平移算子与形变算子仍然良定义，因此上述性质在离散设置中仍成立。
+
+\subsection{具有 Euclidean 几何稳定性的表示}
+
+受上述几何稳定性先验的启发，我们希望构造与这一先验相容的信号表示。具体而言，设我们对目标函数 $f$ 的估计具有如下形式：
+\begin{equation}
+    \hat{f}(\bbx) := \langle \Phi(\bbx), \theta \rangle~,
+\end{equation}
+其中，$\Phi: L^2(\Omega) \to \R^K$ 对应于信号表示，$\theta \in \R^K$ 则对应于分类系数或回归系数。
+在 CNN 中，可以将 $\Phi$ 对应于把输入映射到最后一个隐藏层的算子，而将 $\theta$ 对应于网络最末端的输出层。
+
+% are stable with respect to small deformations. 
+% If $\bbx_\tau(u):= \bbx(u - \tau(u))$ denotes a change of variables 
+% with a differentiable field $\tau : \Omega \to \Omega$ 
+% such that $\| \nabla \tau \| < 1$, then we ask
+
+上述 $\Phi(\bbx)$ 与 $\hat{f}(\bbx)$ 之间的线性关系表明，表示具有几何稳定性足以保证预测器同样具有几何稳定性。事实上，若假设
+\begin{equation}
+\label{ble}
+\forall~\bbx,\tau~,\, \| \Phi(\bbx) - \Phi(\bbx_\tau) \| \lesssim \| \bbx \| \| \tau \|~,    
+\end{equation}
+则由 Cauchy--Schwarz 不等式可得
+$$| \hat{f}(\bbx) - \hat{f}(\bbx_\tau) | \leq \| \theta\| \| \Phi(\bbx) - \Phi(\bbx_\tau) \| \lesssim \| \theta\| \| \bbx \| \| \tau \|~.$$
+
+这促使我们研究能够保证 (\ref{ble}) 的信号表示，同时还需确保 $\Phi$ 捕获足够的信息，使得 $\| \Phi(\bbx) - \Phi(\bbx') \|$ 在 $|f(\bbx) - f(\bbx')| $ 较大时也较大。
+在这一设置下，要在实现 (\ref{ble}) 的同时使 $\Phi(\bbx)$ 保持足够的判别能力，一个众所周知的难题是以能够使其变得稳定的方式变换 $\bbx$ 的高频内容。
+
+
+
+在识别任务中，我们可能不仅希望考虑几何稳定性，还希望考虑相对于 $L^2(\Omega)$ 中 Euclidean 度量的稳定性：
+\begin{equation}
+\label{additive_stability}
+\forall\, \bbx,\bbx' \in L^2(\Omega)~,~\| \Phi(\bbx) - \Phi(\bbx') \| \lesssim \| \bbx - \bbx' \| ~.
+\end{equation}
+这一稳定性性质保证，输入中的加性噪声不会使特征表示发生剧烈变化。
+
+稳定性要求 (\ref{ble}) 和 (\ref{additive_stability}) 也可以从对抗样本鲁棒性的角度来解释 \cite{szegedy2013intriguing}。事实上，对抗样本的一般设置是：产生小扰动 $\bbx'$，其对应的给定输入为 $\bbx$（由适当的范数度量），并使 $| \langle \Phi(\bbx) - \Phi(\bbx'), \theta \rangle|$ 较大。稳定表示能够保证，这类对抗样本无法通过较小的加性扰动或几何扰动获得。
+
+\subsection{非 Euclidean 几何稳定性}
+\label{sec:noneuclideanstab}
+
+虽然 Euclidean 域可用于建模许多感兴趣的信号，例如图像、视频或语音，但物理科学和社会科学中的大量高维数据自然定义在更一般的几何结构上。例如，在社交网络上测得的信号具有丰富的几何结构，其中编码了局部性与多尺度性质，但它们处于非 Euclidean 几何上。因此，一个重要问题是如何将几何稳定性的概念推广到更一般的域。
+
+形变为描述 Euclidean 域中的几何稳定性提供了自然框架，但将其推广到非 Euclidean、非光滑域并不直接。
+设 $\bbx \in L^2(\mathcal{X})$ 是定义在域 $\mathcal{X}$ 上的信号。如果 $\mathcal{X}$ 嵌入低维 Euclidean 空间 $\Omega \subset \R^d$，例如三维空间中的二维曲面，那么仍可在 $\mathcal{X}$ 上定义有意义的形变，做法是采用 $\Omega$ 的\emph{外在}形变。事实上，若 $\tau: \R^d \to \R^d$ 是光滑场，且 $\varphi(v) = v - \tau(v)$ 是相应的微分同胚（假设 $\| \tau\| < 1/2)$，则可将 $\bbx_\tau \in L^2( \mathcal{X}_\tau)$ 定义为
+$$\bbx_\tau(u) := \bbx(\varphi^{-1}(u))~,u \in \mathcal{X}~.$$
+文献 \citep{kostrikov2017surface} 已研究此类形变模型及其在曲面表示中的应用，其中几何稳定性的概念依赖于其环境 Euclidean 结构。
+
+然而，在更一般的应用中，我们可能关心几何稳定性的内在概念，它不一定依赖于域的某个预先存在的低维嵌入。
+定义形变的变量替换 $\varphi(u) = u - \tau(u)$ 可以视为对 $L^2(\R^d)$ 中 Euclidean 度量的扰动。事实上，
+\begin{equation} \nonumber
+    \langle \bbx_\tau, \bby_\tau \rangle_{L^2(\R^d,\mu)} = \int_{\R^d} \bbx_\tau(u) \bby_\tau(u) d\mu(u) = \int_{\R^d} \bbx(u) \bby(u) | I - \nabla \tau(u)| d\mu(u) = \langle \bbx, \bby \rangle_{L^2(\R^d, \tilde{\mu})}~,
+\end{equation}
+其中 $d\tilde{\mu}(u) = | I - \nabla \tau(u)| d\mu(u)$；$| I - \nabla \tau(u)| \approx 1$ 在 $\| \nabla \tau \|$ 较小时成立，这里 $I$ 为恒等映射。
+因此，将形变稳定性的概念推广到一般域 $L^2(\mathcal{X})$ 的一种可能方式，是将 $\mathcal{X}$ 看作度量空间，并考察 $\Phi: L^2(\mathcal{X}) \to \R^K$ 对 $\mathcal{X}$ 中\emph{度量变化}的稳定性。
+这既要求表示能够定义在一般度量空间上，也要求有判据来比较两个度量空间的接近程度。我们将在第 \ref{sec:graph} 节介绍一种基于扩散算子的离散度量空间通用方法。
+
+\subsection{示例}
+\label{sec:geomexamples}
+
+\subsubsection{核方法}
+\label{kernelmethods}
+
+核方法是机器学习框架中的一类一般理论，其主要目的是将数据嵌入高维空间，以便用线性标量积表达复杂关系。
+
+对于一般的输入空间 $\mathcal{Z}$（结合前文讨论，可将其视为 $\mathcal{Z} = L^2(\mathcal{X})$），\emph{特征图} $\Phi: \mathcal{Z} \longrightarrow \mathcal{H}$ 将数据映射到具有再生性质的 Hilbert 空间 $\mathcal{H}$：对每个 $f \in \mathcal{H}$ 和 $\bbx \in \mathcal{Z}$，都有 $f(\bbx) = \langle f, \Phi(\bbx) \rangle$。线性分类方法仅通过如下形式的标量积访问变换后的数据 $\Phi(\bbx)$ \cite{kernel_methods}：
+$$\langle \Phi(\bbx), \Phi(\bbx') \rangle~.$$
+
+常用的“核技巧”并不显式构造这一映射，而是利用 Mercer 定理。该定理指出，连续、对称且正定的核 $K: \mathcal{Z} \times \mathcal{Z} \to \mathbb{R}$ 在 $L^2(\mathcal{Z})$ 上定义了一个积分算子；该算子可在一组标准正交基 \cite{mercer_theorem} $\{\phi_n\}_n$ 中对角化，这组基属于 $L^2(\mathcal{Z})$，且对应的特征值非负。因此，$K(\bbx,\bbx')$ 具有如下表示：
+$$K(\bbx,\bbx') = \sum_{n\geq 1} \lambda_n \phi_n(\bbx)\phi_n(\bbx')~,$$
+由此得到
+$$K(\bbx,\bbx') = \langle \Phi(\bbx), \Phi(\bbx') \rangle~,$$
+其中 $\Phi(\bbx)=(\lambda_n^{1/2} \phi_n(\bbx)  )_n$。因此，在核方法中，只需构造正定核 $K$，并将其定义在 $\mathcal{Z}^2$ 上，即可将线性分类工具推广到更复杂的关系。
+%Support Vector Machines (SVMs) are particular
+%instances of kernel methods, which construct 
+%separating hyperplanes in supervised 
+%learning tasks. %We shall discuss these methods
+%in further detail on Chapter \ref{classif_chapt}.
+
+%supervised learning.
+%High dimensional problem. 
+%svm
+% be careful because it works well in some areas.
+尽管核方法在许多机器学习任务中取得了成功并表现出良好效果，但其诱导的高维嵌入并不会自动具备对加性噪声或形变的稳定性。
+%On supervised learning applications, 
+因此需要相应地选择核。
+\emph{Convolutional Kernels Networks} \cite{mairal2014convolutional,bietti2017group} 
+旨在捕获几何稳定性，并提供可与现代深度架构竞争的经验性能。
+这类核不同于近期出现的另一族 \emph{Neural Tangent Kernels} \cite{jacot2018neural}；后者在参数初始化附近对一般深度架构进行线性化，且不能提供同等程度的几何稳定性 \cite{bietti2019inductive}。
+
+\begin{comment}
+
+
+\subsubsection{Deformable Templates}
+
+The theory of deformable templates, 
+pioneered by Grenader in \cite{grenader_orig}, 
+ introduced the notion of group action 
+to construct metrics in a generic object space. 
+A deformable template is defined as an 
+element $x \in \mathcal{X}$ on which a group action 
+$G \times \mathcal{X}$, $(g, x)\mapsto g.x \in \mathcal{X}$ is defined. 
+This action defines through the orbits $\{g.x\,,\, g \in G\}$ 
+a family of ``deformed" objects. 
+
+This structure allows us to 
+incorporate the group action into 
+the notion of similarity between elements
+of $\mathcal{X}$.
+A metric $d$ on $\mathcal{X}$ can be 
+constructed from a metric $\tilde{d}$ on the lifted product
+space $G \times \mathcal{X}$ \cite{miller_younes}. 
+If $\tilde{d}$ is \emph{left-invariant} \footnote{A distance $\tilde{d}$ 
+on $G \times \mathcal{X}$ is left-invariant \cite{miller_younes} 
+if, for all $h,g,g' \in G$ 
+and all $x$, $x' \in \mathcal{X}$, 
+$$\tilde{d}(h.(g,x) , h.(g',x')) = \tilde{d}( (g,x), (g',x'))$$ } , 
+then
+\begin{equation}
+\label{def_templates_metric}
+d(x, x') = \inf \{\tilde{d}( (id,x), (g,g.x') )\,,\, g \in G   \}~
+\end{equation}
+defines a metric from the set distance
+between the orbits of 
+$x$ and $x'$ under the action of $G$.
+
+If $G$ denotes the group of $\mathbb{R}^d$ 
+diffeomorphisms, acting on 
+$\mathcal{X}=\LD$ by composition, then
+the construction (\ref{def_templates_metric})
+has the capacity to express the similarity 
+between $x$ and its deformed version $g.x$
+in terms of the amount of deformation 
+$g$. 
+%metric $\tilde{d}$ 
+%has the capacity to express the similarity 
+%between two elements $(1,x)$, $(g,x)$ of 
+%$G \times \mathcal{X}$ in terms of the amount
+%of deformation $g$ applied to $x$. 
+%In general,  
+%there is no simple way to construct 
+% left-invariant metrics on the product space
+%$G \times \mathcal{X}$.
+% In \cite{trouve-younes}, Trouv�
+%and Younes construct a differential structure on 
+%the product space, based on infinitesimal deformations 
+%and amplitude variations. This structure then 
+%enables the definition and computation of
+%geodesics.
+
+The computation of the distance 
+$d(x,x')$ in (\ref{def_templates_metric}) requires
+to optimize a deformation cost function, 
+which in general is an ill-posed inverse problem.
+In some applications, however, such as medical
+imaging, it uncovers essential information 
+about the underlying deformation process. 
+
+
+%differential approach in \cite{trouve_younes}
+%define geodesics
+In general, there is no simple way to construct 
+meaningful left-invariant metrics on the product space
+$G \times \mathcal{X}$. In \cite{trouve-younes}, Trouve
+and Younes construct a differential structure on 
+this space, based on infinitesimal deformations 
+and amplitude variations. This structure then 
+enables the definition and computation of
+geodesics. More specifically, the authors 
+consider infinitesimal perturbations of 
+a template $I \in \mathcal{X}$ of the form
+\begin{eqnarray*}
+G \times \mathcal{X} &\longrightarrow& \mathcal{X}~, \\
+(\tau,\sigma) &\longmapsto& \tilde{I}^{\epsilon}_{(v,z)}(u) = I(u-\epsilon \tau(u)) + \beta \epsilon \sigma(u) + o(\epsilon)~,
+\end{eqnarray*}
+for small $\epsilon >0$. 
+The vector field $\tau(u)$ thus carries the geometrical transformation,
+whereas the scalar function $\sigma(u)$ represents infinitesimal 
+amplitude variations. One then constructs the tangent 
+space $T_I$ from these infinitesimal variations:
+$$T_I = \left\{ \lim_{\epsilon\to 0} \frac{\tilde{I}^{\epsilon}_{(\tau,\sigma)} - I}{\epsilon} \,,\, (\tau,\sigma) \in G\times \mathcal{X} \right\}~.$$
+By considering a norm $|\,\cdot \,|_{W}$ on 
+$G \times \mathcal{X}$, one can define a metric $|\, \cdot\, |_{W'}$ on 
+the tangent space $T_I$, which leads to the geodesic
+distance 
+$$d_W(I_0, I_1) = \inf \left\{ \int_0^1 |\dot{\gamma}(t) |_{W'} dt~, \gamma(0)=I_0\,\,,\gamma(1)=I_1 \right\} ~,$$
+where the infimum is taken over all paths $\gamma$ joining the two 
+images $I_0$, $I_1$.
+
+The computation of such geoedesics thus requires to solve a
+variational problem, which in particular estimates deformations
+minimizing a trade-off between the geometric and photometric
+components of the perturbation of the form
+$\hat{\varphi} = \argmin \| I_1 - I_0 \circ \varphi \|_2^2 + D_G(Id, \varphi)^2~,$
+where $D_G$ is a metric on the space of diffeomorphisms.
+
+The estimation of diffeomorphisms is a difficult inverse problem. 
+Several methods have been proposed, for
+instance in \cite{trouve_diffgroups, trouve_stats}, with applications
+in medical imaging \cite{allassonniere_1} and classification \cite{allassonniere_2}.
+As we shall see, the scattering metric $d(x,x')=\| \Phi(x) - \Phi(x')\|$ 
+where $\Phi$ linearises small deformations is a powerful alternative that
+bypasses the need to estimate this inverse problem.
+
+\end{comment}
+
+\subsubsection{功率谱、自相关与配准不变量}
+\label{transdef}
+
+可以通过配准、自相关或 Fourier 模算子得到平移不变表示。然而，由此得到的表示对于形变并非 Lipschitz 连续。
+
+若表示 $\Phi (\bbx)$ %to global translations
+将任意函数的全局平移 $\bbx_c(u) = \bbx(u-c)$（其中 $c \in \R^d$）映射到同一像，则称其具有平移不变性；这里该函数为 $x \in \LD$：
+\begin{equation}
+\label{invar}
+\forall \, \bbx \in \LD\,,\,\forall \, c \in \R^d~,~\Phi (\bbx_c) = \Phi (\bbx)~.
+\end{equation}
+
+Fourier 变换的模是平移不变表示的一个例子。设 $\hat \bbx (\omega)$ 为 $\bbx(u) \in \LD$ 的 Fourier 变换。由于
+$\widehat {\bbx_c} (\omega) = e^{-i c.\omega}\, \hat \bbx(\omega)$，可知 $|\widehat {\bbx_c} | = |\hat \bbx|$ 与 $c$ 无关。
+
+Fourier 模具有平移不变性，并且对加性噪声稳定，但在高频处对小形变不稳定 \cite{stephane}，如下所述的膨胀示例所示。
+设 $\tau(u)=su$ 表示线性位移场，其中 $|s|$ 很小，
+%a small factor $|s|$, % such that $| 1- s |$ is small, 
+并设 $\bbx(u)=e^{i \xi u} \theta(u)$ 是低通窗 $\theta(u)$ 的调制版本。于是，膨胀 $\bbx_\tau(u) = \dL{\tau} \bbx(u)=\bbx((1+s)u)$ 将 $\hat{\bbx}$ 的中心频率从 $\xi$ 移至 $(1+s) \xi$。若 $\sigma^2_\theta = \int |\om|^2 |\hat{\theta}(\om)|^2 d\om$ 度量 $\theta$ 的频率展宽，则
+$$\sigma^2_x=\int |\om-\xi|^2 |\hat{x}(\om)|^2 d\om= \sigma^2_\theta~,$$
+并且
+\begin{eqnarray*}
+\sigma^2_{x_\tau} &=& (1+s)^{-d} \int (\om-(1+s)\xi)^2 |\hat{x}((1+s)^{-1}\om)|^2 d\om \\
+&=& \int |(1+s)(\om-\xi)|^2 |\hat{x}(\om)|^2 d\om = (1+s)^2 \sigma^2_x~.
+\end{eqnarray*}
+由此可知，若 $\bbx$ 与 $\bbx_\tau$ 的中心频率间距 $s \xi$ 相对于二者的频率展宽 $ (2+s) \sigma_\theta$ 较大，则 $\bbx$ 与 $\bbx_\tau$ 的频率支撑几乎不相交，因而
+ $$\| | \hat{\bbx}_\tau | - | \hat{\bbx} | \| \sim \| \bbx \| ~,$$
+这表明 $\Phi(\bbx) = |\hat{\bbx}|$ 对形变并非 Lipschitz 连续，因为 $\xi$ 可以任意大。
+
+\begin{figure}[htp]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/fourier_unstab.pdf}
+\caption{复带通窗的膨胀。若 $\xi \gg \sigma_x s^{-1}$，则支撑几乎不相交。}
+\label{fourier_unstab}
+\end{figure}
+
+%auto-correlation
+信号 $\bbx$ 的自相关
+$$R_\bbx(v) = \int \bbx(u) \bbx^*(u-v) du$$ 
+也具有平移不变性：$R_\bbx = R_{\bbx_c}$。由于 $R_\bbx(v) = \bbx \star \overline{\bbx} (v)$，且 $\overline{\bbx}(u) = \bbx^*(-u)$，可得
+%the autocorrelation representation $\Phi (\bbx) = R_\bbx$ satisfies
+$\widehat {R_x} (\om) = |\hat x (\omega)|^2~.$
+因此，Plancherel 公式证明它具有与 Fourier 变换相同的不稳定性：
+\[
+\| R_\bbx - R_{\bbx_\tau} \|= (2 \pi)^{-1} \| |\hat{\bbx}|^2 - |\hat{\bbx}_\tau|^2 \|~.
+\]
+
+除了形变不稳定性之外，Fourier 模和自相关还会丢失过多信息。例如，Dirac $\delta (u)$ 与线性啁啾 $e^{i u^2}$ 是两个其 Fourier 变换模相等且为常数的信号。差异很大的信号可能无法通过其 Fourier 模加以区分。
+
+%canonical invariant
+典范不变量 \cite{mnist_deformation,Soatto} $\Phi(\bbx) = \bbx(u -a(\bbx))$ 对 $\bbx \in \LD$ 进行配准，所用锚点为 $a(\bbx)$；当 $\bbx$ 平移时，该锚点也随之平移：
+$$a(\bbx_c) = a(\bbx) + c~.$$ 
+因此，它定义了平移不变表示：$\Phi \bbx_c = \Phi \bbx$。例如，锚点可以是滤波后的最大值 $a(\bbx) = \arg \max_{u} |\bbx \star h(u)|$，其中 $h(u)$ 为某个滤波器。典范不变量 $\Phi \bbx(u) = \bbx(u - a(\bbx))$ 携带的信息多于 Fourier 模，并且在相差一个全局绝对位置信息的意义下刻画 $\bbx$ \cite{Soatto}。然而，它具有与 Fourier 模变换相同的高频不稳定性。事实上，对于任意锚点选择 $a(\bbx)$，应用 Plancherel 公式可证明
+\[
+\| \bbx(u-a(\bbx)) - \bbx'(u-a(\bbx')) \|\geq (2 \pi)^{-1}\,\||\hat \bbx(\om)| - |\hat \bbx'(\om)| \| ~.
+\]
+若 $\bbx' = \bbx_\tau$，则 Fourier 变换在高频处的不稳定性意味着 $\Phi \bbx = \bbx(u-a(\bbx))$ 对形变也不稳定。

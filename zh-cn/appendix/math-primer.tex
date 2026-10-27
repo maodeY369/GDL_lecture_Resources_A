@@ -1,0 +1,278 @@
+\chapter{数学概念导读：从深度学习实例理解几何结构}
+\label{app:primer:chapter}
+
+\begin{tcolorbox}[width=\linewidth,colback=boxgray!45,colframe=darkgry,title=附录身份与使用方式]
+本章是为中文版读者编写的编辑性增补，不属于英文原稿，也不代表原作者新增的论述。它面向熟悉基础深度学习、向量和矩阵运算，但尚未系统学习抽象代数或微分几何的读者。目标不是替代数学教材，而是建立一组足以阅读正文的概念支点。建议先阅读本章，再回到第~\ref{sec:geom_priors} 节的几何先验和正文后续各节。
+\end{tcolorbox}
+
+几何深度学习中的抽象概念通常围绕同一条设计链展开：先确定数据位于什么\emph{域}上，再确定哪些变换不应改变任务含义，随后规定中间特征在这些变换下应如何变化，最后据此限制网络层的形式。理解这条链，比孤立记忆“群”“流形”或“Laplacian”的定义更有帮助。
+
+\section{先分清四类对象}
+\label{app:primer:objects}
+
+阅读公式时，可以先判断每个符号属于以下哪一类。
+
+\begin{center}
+\small
+\begin{tabular}{@{}p{0.18\linewidth}p{0.34\linewidth}p{0.39\linewidth}@{}}
+\toprule
+对象 & 它回答的问题 & 深度学习中的典型实例 \\
+\midrule
+域 $\Omega$ & 数据索引位于哪里，哪些索引彼此相邻 & 图像像素坐标、图节点、曲面上的点 \\
+信号 $x$ & 每个索引位置存放什么数值 & RGB 值、节点特征、温度场、3D 向量特征 \\
+变换 $\fg$ & 哪种改变应被视为同一对象的另一种观察方式 & 图像平移、节点重编号、3D 旋转 \\
+模型 $F$ & 输入改变后，输出应保持不变还是同步改变 & 分类器、分割器、节点预测器 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+集合只说明“有哪些元素”，本身不提供顺序、距离或线性运算。例如，点云可以首先看作点的集合。映射 $x:\Omega\rightarrow\mathcal{C}$ 给每个域元素 $u\in\Omega$ 指定一个值 $x(u)\in\mathcal{C}$，因此把“位置”和“位置上的特征”分开了。向量空间则额外允许向量加法与标量乘法；像素的 RGB 通道或节点的隐藏特征通常位于某个向量空间中。
+
+\begin{tcolorbox}[width=\linewidth,colback=boxgray!35,colframe=darkgry,title=深度学习实例：同一个矩阵可能承担不同角色]
+图像可以写成矩阵，但矩阵的行列顺序与二维像素坐标绑定。图的节点特征也可以写成矩阵 $\vec{X}\in\mathbb{R}^{n\times s}$，但它的行顺序只是节点编号；同时重排节点特征和邻接矩阵，不应改变图本身。
+
+\textbf{它说明什么：}数组表示不等于几何结构，必须同时说明索引域及其允许的变换。
+
+\textbf{它没有说明什么：}并非所有矩阵都能任意重排行列；对图像像素任意置换通常会破坏空间邻接关系。
+\end{tcolorbox}
+
+\section{群、群作用与群表示}
+\label{app:primer:groups}
+
+\subsection{群：可以一致地复合和撤销的变换}
+
+群 $\fG$ 是带有复合运算的集合。该运算满足结合律；群中存在单位元 $e$；每个元素 $\fg$ 都有逆元 $\fg^{-1}$。这里的重点不是“元素看起来像什么”，而是变换能否复合、是否有“不做任何事”的变换，以及能否撤销。
+
+整数平移构成群：先平移 $a$ 个像素再平移 $b$ 个像素，等价于平移 $a+b$ 个像素；零平移是单位元；平移 $a$ 的逆变换是平移 $-a$。固定大小集合上的所有置换也构成群，但其复合通常不满足交换律。
+
+\subsection{群作用：变换如何移动数据的位置}
+
+仅有群还不够，必须说明群元素如何作用于具体域。群作用写成 $\fg.u$，并满足
+\begin{equation}
+e.u=u,
+\qquad
+(\fg_1\fg_2).u=\fg_1.(\fg_2.u).
+\label{app:primer:group-action}
+\end{equation}
+例如，二维整数平移群可以作用于像素坐标，置换群可以作用于图的节点编号。相同的抽象群也可能以不同方式作用于不同对象，因此“群”和“群作用”不能混用。正文第~\ref{sec:symmetries} 节及式~\plaineqref{eq:group_action} 给出了更完整的讨论。
+
+\subsection{群表示：变换如何作用于特征向量}
+
+群表示把群元素映射为可逆线性算子：
+\begin{equation}
+\rho:\fG\rightarrow\mathrm{GL}(V),
+\qquad
+\rho(\fg_1\fg_2)=\rho(\fg_1)\rho(\fg_2).
+\label{app:primer:representation}
+\end{equation}
+它描述特征坐标随变换如何变化。标量亮度在旋转图像时通常不需要旋转自身；二维方向向量则应随图像旋转。二者可以对应同一旋转群的不同表示。
+
+\begin{tcolorbox}[width=\linewidth,colback=boxgray!35,colframe=darkgry,title=常见误解：群作用不是群表示]
+群作用首先描述域元素如何移动，例如像素位置 $u$ 变成 $\fg.u$；群表示描述向量特征如何线性变换，例如方向通道乘以旋转矩阵。对标量图像，两者容易在记号上显得相似；对向量场或张量特征，它们的区别不可省略。
+\end{tcolorbox}
+
+\section{不变性与等变性：模型输出应该怎样响应}
+\label{app:primer:invariance-equivariance}
+
+设 $\rho_{\mathrm{in}}(\fg)$ 表示变换在输入上的作用。若任务输出不应随变换改变，则模型 $F$ 应满足不变性：
+\begin{equation}
+F(\rho_{\mathrm{in}}(\fg)x)=F(x).
+\label{app:primer:invariance}
+\end{equation}
+若输出也有相应的变换规则 $\rho_{\mathrm{out}}(\fg)$，则希望满足等变性：
+\begin{equation}
+F(\rho_{\mathrm{in}}(\fg)x)
+=\rho_{\mathrm{out}}(\fg)F(x).
+\label{app:primer:equivariance}
+\end{equation}
+
+图像分类通常希望对小范围平移近似不变：猫移到画面另一位置，类别仍是“猫”。语义分割则不同：输入向右平移后，输出掩码也应向右平移，因此中间和最终的空间输出更适合满足平移等变性。规则网格上的卷积层是经典的平移等变构造；群卷积把这一思想推广到更一般的群作用 \citep{cohen2016group}。
+
+\begin{center}
+\small
+\begin{tabular}{@{}p{0.25\linewidth}p{0.28\linewidth}p{0.38\linewidth}@{}}
+\toprule
+任务 & 合理目标 & 变换后的期望输出 \\
+\midrule
+图像分类 & 不变或近似不变 & 类别不变 \\
+语义分割 & 等变 & 掩码与图像同步移动 \\
+图节点分类 & 置换等变 & 节点输出按同一置换重排 \\
+整图分类 & 置换不变 & 图级预测不依赖节点编号 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{tcolorbox}[width=\linewidth,colback=boxgray!35,colframe=darkgry,title=边界：数据增强不等于严格等变]
+用平移或旋转后的样本训练模型，可能提高模型对这些变换的经验鲁棒性，但有限数据增强通常不能单独证明式~\plaineqref{app:primer:invariance} 或式~\plaineqref{app:primer:equivariance} 对所有输入和所有群元素严格成立。结构性等变来自网络层满足相应代数约束；经验性能还取决于数据、优化和模型容量。
+\end{tcolorbox}
+
+正文第~\ref{sec:gdl_blueprint} 节给出了从局部等变层到全局任务输出的设计蓝图。
+
+\section{格、规则网格、网格曲面与一般图}
+\label{app:primer:lattices-grids}
+
+“格”和“网格”在不同领域中可能指不同对象。本节中的\emph{格}（lattice）指由一组线性无关基向量生成的离散平移集合，例如
+\begin{equation}
+\Lambda=\left\{\sum_{i=1}^{d} k_i b_i: k_i\in\mathbb{Z}\right\}.
+\label{app:primer:lattice}
+\end{equation}
+二维方格和六角格都属于这种意义下的格；这里的“格”不是序理论中带有上确界、下确界运算的 lattice。
+
+规则网格通常是格上的有限采样区域，外加固定的邻接方式与边界规则。数字图像是最熟悉的例子：像素坐标近似位于二维方格上，每个内部像素共享相同的局部邻域模板。正是这种全局一致的平移结构，使同一卷积核可以在不同位置共享参数：
+\begin{equation}
+(x\star\theta)(u)=\sum_v x(v)\theta(u-v).
+\label{app:primer:grid-convolution}
+\end{equation}
+
+网格曲面（mesh）则通常由顶点、边和面离散表示曲面。它的连接关系可能不规则，不存在覆盖整个曲面的单一平移坐标。因此，图像网格上的卷积核不能直接原样搬到任意网格曲面上。正文第~\ref{sec:grids_euclidean} 节讨论规则网格，第~\ref{sec:meshes} 节讨论流形网格曲面。
+
+\begin{tcolorbox}[width=\linewidth,colback=boxgray!35,colframe=darkgry,title=深度学习实例：为什么 CNN 能共享卷积核]
+在图像内部，不同像素的局部邻域可以用同一组相对偏移表示，例如“左一格、右一格、上一格、下一格”。卷积核把权重绑定到这些相对偏移，而不是绑定到绝对像素编号。
+
+\textbf{它说明什么：}参数共享依赖可重复的局部几何模板。
+
+\textbf{它没有说明什么：}图像边界、非均匀采样和任意图不自动拥有相同的平移结构；padding 的选择也会影响边界处的严格等变性。
+\end{tcolorbox}
+
+\section{图与消息传递}
+\label{app:primer:graphs}
+
+图 $G=(\mathcal{V},\mathcal{E})$ 由节点集合与边集合组成。图结构说明哪些对象直接关联，但一般不提供全局坐标、唯一距离或统一方向。分子中的原子可以作为节点，化学键作为边；社交网络中的用户可以作为节点，关系作为边。
+
+节点编号只是存储约定。若用置换矩阵 $\vec{P}$ 同时重排节点特征和邻接矩阵，则得到的仍是同一张带特征图的不同表示。因此，节点级模型应对这种重编号等变，整图模型则应对其不变。
+
+消息传递 GNN 的一层可以抽象为
+\begin{align}
+m_u &= \bigoplus_{v\in\mathcal{N}(u)}
+      \psi(x_u,x_v,e_{uv}), \\
+h_u &= \phi(x_u,m_u),
+\label{app:primer:message-passing}
+\end{align}
+其中 $\mathcal{N}(u)$ 是节点 $u$ 的邻域，$\psi$ 生成邻居消息，$\bigoplus$ 是对邻居顺序不敏感的聚合，$\phi$ 更新节点特征。求和、均值或最大值都是常见的置换不变聚合，但它们保留的信息不同。正文第~\ref{sec:proto-graphs} 节介绍图域，第~\ref{sec:gnn-intro} 节讨论 GNN；消息传递框架的代表性形式见 \citet{gilmer2017neural}。
+
+\begin{tcolorbox}[width=\linewidth,colback=boxgray!35,colframe=darkgry,title=边界：一般图不是弯曲的图像网格]
+规则图像网格可以表示为图，因此某些 CNN 操作可以写成图上的局部聚合。但一般图没有统一的“左、右、上、下”，节点度数也可能不同。由此只能推出两者共享局部聚合思想，不能推出任意 GNN 都等价于 Euclidean CNN。
+\end{tcolorbox}
+
+集合模型可看作图结构的一个极端情形：只要求元素置换不改变集合含义，而不指定成对边。Deep Sets 使用逐元素映射与对称聚合构造置换不变函数 \citep{zaheer2017deep}。
+
+\section{度量、拓扑与流形}
+\label{app:primer:manifolds}
+
+\subsection{度量告诉我们“多远”，拓扑告诉我们“多近才算邻近”}
+
+度量空间在集合 $\Omega$ 上配备距离 $d(u,v)$。距离满足非负性、同一性、对称性与三角不等式。度量允许定义最近邻、球和曲线长度。拓扑保留更弱的信息：哪些集合是开集、哪些序列收敛、函数是否连续。不同度量可能诱导同一拓扑，因此“连续性结构相同”不意味着实际距离相同。
+
+在深度学习中，最近邻图的构造依赖所选度量。若把点云坐标从米改成各轴不同的缩放，Euclidean 最近邻关系可能改变；这不是模型实现细节，而是数据几何假设的一部分。
+
+\subsection{流形在局部像 Euclidean 空间}
+
+一个 $d$ 维流形在每个点附近都可以用 $\mathbb{R}^d$ 中的局部坐标描述，但全局上未必存在单一坐标系。球面局部像二维平面，却不能无失真地铺成一张全局平面图。流形可能嵌入更高维空间；嵌入空间中的直线距离是外在量，沿流形的最短路径长度是内蕴量，二者通常不同。
+
+点云是离散样本，网格曲面是带连接关系的离散近似；它们本身不因“看起来像曲面”就自动满足所假设流形的全部光滑性质。模型使用切空间、测地线或曲率时，通常还依赖采样密度、离散化和数值近似。
+
+\subsection{切空间是局部线性化}
+
+点 $u$ 处的切空间 $T_u\Omega$ 收集经过 $u$ 的曲线在该点的速度方向。它把局部非线性几何转化为可做线性代数的空间。Riemann 度量 $g_u$ 在每个切空间上给出内积，从而定义向量长度与夹角，并进一步定义曲线长度和测地距离。
+
+\begin{tcolorbox}[width=\linewidth,colback=boxgray!35,colframe=darkgry,title=深度学习实例：曲面上的方向特征]
+人体表面网格上的每个顶点可以带一个切向量特征，例如沿表面的运动方向。不同顶点的切空间不同，两个向量不能只凭坐标分量直接相加；必须先规定如何把一个点的方向与另一个点的方向比较。
+
+\textbf{它说明什么：}曲面网络需要处理局部坐标与跨点比较问题。
+
+\textbf{它没有说明什么：}并非每项 3D 任务都必须使用完整微分几何；若任务只使用标量或距离，所需结构可能更少。
+\end{tcolorbox}
+
+正文第~\ref{sec:geomanifoldsec} 节引入流形，第~\ref{sec:manifolds} 节讨论度量与分析工具。
+
+\section{Laplacian、谱与 Fourier 观点}
+\label{app:primer:laplacian}
+
+Laplacian 可以直观理解为衡量一个位置与其邻域聚合状态之差的一类算子；它有组合、归一化等多种形式。在无向加权图上，令 $\vec{A}$ 为对称邻接矩阵，$\vec{D}$ 为度矩阵，则组合 Laplacian 为
+\begin{equation}
+\vec{L}=\vec{D}-\vec{A}.
+\label{app:primer:graph-laplacian}
+\end{equation}
+对节点标量信号 $\vec{x}$，有
+\begin{equation}
+\vec{x}^{\top}\vec{L}\vec{x}
+=\frac{1}{2}\sum_{u,v}A_{uv}(x_u-x_v)^2.
+\label{app:primer:dirichlet-energy}
+\end{equation}
+因此，当相邻节点取值接近时，该能量较小。这个等式依赖 $\vec{A}$ 对称且权重非负；有向图或带符号图需要不同处理。
+
+若 $\vec{L}\varphi_k=\lambda_k\varphi_k$，则特征向量 $\varphi_k$ 给出一组图信号方向。较小的 $\lambda_k$ 通常对应沿图边变化较慢的模式，较大的 $\lambda_k$ 对应更快速的变化。把信号投影到这些特征向量上，可得到一种图 Fourier 表示。谱滤波器可写成 $p(\vec{L})\vec{x}$；多项式形式不需要显式计算完整特征分解，并具有局部传播解释。谱图卷积网络的早期实例包括 \citet{defferrard2016convolutional}。
+
+在规则周期网格上，普通 Fourier 基能够对角化平移不变卷积；图 Laplacian 的特征基提供了相似的谱语言。但“相似”不等于“完全相同”：任意图上没有唯一平移群，重复特征值对应的特征向量也不唯一，不同图之间的谱基未必自然对齐。正文式~\plaineqref{eq:mesh_lap} 给出网格 Laplacian，式~\plaineqref{eqn:conv_spectral} 讨论谱滤波。
+
+\begin{tcolorbox}[width=\linewidth,colback=boxgray!35,colframe=darkgry,title=常见误解：低频不等于语义上重要]
+Laplacian 的“低频”只表示相对于所选图结构和权重变化缓慢。若图边没有表达任务相关关系，低频平滑可能抹去有用信号。谱平滑是一种归纳偏置，而不是普遍正确的语义假设。
+\end{tcolorbox}
+
+\section{表示与规范：坐标变化时特征如何变化}
+\label{app:primer:gauge}
+
+流形上的局部切空间需要选择基才能把几何向量写成坐标。对每个点分别选择一组局部基，称为选择一个规范。规范变换改变的是局部基，而不是几何对象本身；同一个切向量在新基下会有不同坐标。
+
+若点 $u$ 处的基发生变换 $h_u\in\fG$，向量坐标可能按群表示变化：
+\begin{equation}
+c'_u=\rho(h_u)c_u.
+\label{app:primer:gauge-change}
+\end{equation}
+一个规范等变层应保证：先改变所有局部基再运行网络，与先运行网络再按相应规则变换输出，得到一致结果。这样，网络结论不依赖任意的坐标选择。
+
+\begin{tcolorbox}[width=\linewidth,colback=boxgray!35,colframe=darkgry,title=深度学习实例：网格曲面上的方向卷积]
+在每个网格顶点选择一个局部二维坐标标架，便可描述滤波器方向和切向量通道。换一组坐标标架后，滤波器与特征分量都必须按一致规则变化；否则网络输出会依赖人为选取的“局部横轴”。
+
+\textbf{它说明什么：}规范等变性用于消除局部坐标选择对计算结果的任意影响。
+
+\textbf{它没有说明什么：}规范变换不是把物体在现实空间中旋转；它首先是同一几何对象的坐标描述变化。规范等变性也不意味着输出对所有物理变换都不变。
+\end{tcolorbox}
+
+正文第~\ref{sec:gauges} 节给出规范、结构群和规范等变卷积的正式构造。
+
+\section{不变性之外：为什么还需要稳定性}
+\label{app:primer:stability}
+
+不变性处理“某类变换不应改变结果”，但现实输入还会受到噪声、采样误差和不属于精确对称群的小形变。稳定性要求小输入变化不会造成失控的输出变化。最基本的形式是 Lipschitz 条件：
+\begin{equation}
+\lVert F(x)-F(x')\rVert
+\leq C\lVert x-x'\rVert.
+\label{app:primer:lipschitz}
+\end{equation}
+常数 $C$ 控制扰动被放大的上界。实际问题中，输入差异可能需要用与域结构相适应的距离衡量，例如图形变、点云匹配或沿流形的形变代价；直接使用坐标逐项差异未必反映语义接近程度。
+
+精确不变、近似不变与稳定是不同性质。分类器可以对整数像素平移严格不变，却对一个像素的对抗扰动不稳定；也可以对小旋转经验上稳定，却不满足任何精确旋转不变公式。正文第~\ref{sec:geom_stab} 节讨论形变稳定性。
+
+\section{带着问题回到正文}
+\label{app:primer:reading-guide}
+
+遇到正文中的新算子或网络层时，可以依次回答：
+
+\begin{enumerate}
+\item 域 $\Omega$ 是规则网格、集合、图、流形，还是这些结构的离散近似？
+\item 输入信号是标量、向量、张量，还是节点/边/面的组合特征？
+\item 哪些变换被视为保持任务含义的对称性？这些变换是否真的构成群？
+\item 变换作用在域、信号坐标还是二者之上？相应群表示是什么？
+\item 任务需要不变输出还是等变输出？是精确性质还是经验近似？
+\item 网络层使用了什么局部邻域，聚合是否依赖任意编号或坐标选择？
+\item 距离、Laplacian 或谱基来自哪种几何假设？边界条件是什么？
+\item 结论依赖哪些离散、连续、有限或光滑性前提？
+\end{enumerate}
+
+\begin{center}
+\small
+\begin{tabular}{@{}p{0.23\linewidth}p{0.34\linewidth}p{0.34\linewidth}@{}}
+\toprule
+若主要困惑是 & 先复习本附录 & 再阅读正文 \\
+\midrule
+“变换究竟作用于什么” & 第~\ref{app:primer:groups}、\ref{app:primer:invariance-equivariance} 节 & 第~\ref{sec:symmetries}、\ref{sec:gdl_blueprint} 节 \\
+“图像、图和网格为何不同” & 第~\ref{app:primer:lattices-grids}、\ref{app:primer:graphs} 节 & 第~\ref{sec:grids_euclidean}、\ref{sec:proto-graphs} 节 \\
+“曲面为何需要局部坐标” & 第~\ref{app:primer:manifolds}、\ref{app:primer:gauge} 节 & 第~\ref{sec:manifolds}、\ref{sec:gauges} 节 \\
+“谱卷积在做什么” & 第~\ref{app:primer:laplacian} 节 & 式~\plaineqref{eq:mesh_lap}、\plaineqref{eqn:conv_spectral} \\
+“鲁棒与不变是否相同” & 第~\ref{app:primer:stability} 节 & 第~\ref{sec:geom_stab} 节 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+本章提供的是阅读坐标，而不是绕开定义的捷径。直觉例子用于确定符号扮演的角色；当正文结论依赖精确条件时，仍应以正文给出的定义、假设和公式为准。

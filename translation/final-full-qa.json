@@ -1,0 +1,215 @@
+{
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "files": {
+    "main.tex": {
+      "math_regions": 37,
+      "math_kinds": {
+        "inline-dollar": 37
+      },
+      "math_equal": true,
+      "source_math_sha256": "d1bb1d1c6fa74b167f3de88b48201111c4832363f40530b121d32ae0c245c4e2",
+      "target_math_sha256": "d1bb1d1c6fa74b167f3de88b48201111c4832363f40530b121d32ae0c245c4e2",
+      "labels": 0,
+      "refs": 0,
+      "citations": 3,
+      "environments": {}
+    },
+    "introduction.tex": {
+      "math_regions": 90,
+      "math_kinds": {
+        "inline-dollar": 87,
+        "display-dollar": 3
+      },
+      "math_equal": true,
+      "source_math_sha256": "65fd7bed0bbf3054763d28210e80bb40693c179c585a9b9b7e57839cc7c8005e",
+      "target_math_sha256": "65fd7bed0bbf3054763d28210e80bb40693c179c585a9b9b7e57839cc7c8005e",
+      "labels": 4,
+      "refs": 5,
+      "citations": 26,
+      "environments": {
+        "figure": 3
+      }
+    },
+    "geometricpriors.tex": {
+      "math_regions": 384,
+      "math_kinds": {
+        "inline-dollar": 365,
+        "equation": 5,
+        "equation*": 1,
+        "display-dollar": 13
+      },
+      "math_equal": true,
+      "source_math_sha256": "df260d935523df28c139afeae7c9eabe1ab746b42055e5c4f97c7f4f0f4bbbc3",
+      "target_math_sha256": "df260d935523df28c139afeae7c9eabe1ab746b42055e5c4f97c7f4f0f4bbbc3",
+      "labels": 15,
+      "refs": 26,
+      "citations": 9,
+      "environments": {
+        "figure": 5,
+        "equation": 5,
+        "equation*": 1
+      }
+    },
+    "geometricdomains.tex": {
+      "math_regions": 785,
+      "math_kinds": {
+        "inline-dollar": 718,
+        "equation": 18,
+        "display-dollar": 42,
+        "eqnarray*": 3,
+        "equation*": 3,
+        "eqnarray": 1
+      },
+      "math_equal": true,
+      "source_math_sha256": "f28463ada27b338782da5e87caad538afe3c3cb203b5e3109a86f53dcd9afc9a",
+      "target_math_sha256": "f28463ada27b338782da5e87caad538afe3c3cb203b5e3109a86f53dcd9afc9a",
+      "labels": 27,
+      "refs": 56,
+      "citations": 46,
+      "environments": {
+        "figure": 5,
+        "equation": 18,
+        "equation*": 3
+      }
+    },
+    "geometricmodels.tex": {
+      "math_regions": 538,
+      "math_kinds": {
+        "inline-dollar": 502,
+        "equation": 21,
+        "equation*": 3,
+        "eqnarray*": 1,
+        "display-dollar": 6,
+        "align": 3,
+        "align*": 2
+      },
+      "math_equal": true,
+      "source_math_sha256": "5ba3b143a47f4ab5fbbefa9cb5529edb0878f9b7942fb0b1a5cb94898312b14d",
+      "target_math_sha256": "5ba3b143a47f4ab5fbbefa9cb5529edb0878f9b7942fb0b1a5cb94898312b14d",
+      "labels": 25,
+      "refs": 52,
+      "citations": 99,
+      "environments": {
+        "figure": 8,
+        "equation": 21,
+        "equation*": 3,
+        "align": 3,
+        "align*": 2
+      }
+    },
+    "geometricapplications.tex": {
+      "math_regions": 5,
+      "math_kinds": {
+        "inline-dollar": 5
+      },
+      "math_equal": true,
+      "source_math_sha256": "358ad4e2ce7aeab884b245bcd142d3f2c405cbc6c35b785c37ac72c74612237a",
+      "target_math_sha256": "358ad4e2ce7aeab884b245bcd142d3f2c405cbc6c35b785c37ac72c74612237a",
+      "labels": 0,
+      "refs": 0,
+      "citations": 90,
+      "environments": {}
+    },
+    "historic.tex": {
+      "math_regions": 23,
+      "math_kinds": {
+        "inline-dollar": 23
+      },
+      "math_equal": true,
+      "source_math_sha256": "2606fd939bd24a2fcab3fcc540ca6bbe0ad929e503310341637bf55e4977ff7c",
+      "target_math_sha256": "2606fd939bd24a2fcab3fcc540ca6bbe0ad929e503310341637bf55e4977ff7c",
+      "labels": 0,
+      "refs": 1,
+      "citations": 158,
+      "environments": {}
+    },
+    "geometricstability.tex": {
+      "math_regions": 201,
+      "math_kinds": {
+        "inline-dollar": 177,
+        "equation": 8,
+        "display-dollar": 12,
+        "eqnarray*": 2,
+        "display-bracket": 2
+      },
+      "math_equal": true,
+      "source_math_sha256": "4658f29e1db71fdc3f19fefbe48bffc9fb431e7aea424c57983a18764498ac13",
+      "target_math_sha256": "4658f29e1db71fdc3f19fefbe48bffc9fb431e7aea424c57983a18764498ac13",
+      "labels": 12,
+      "refs": 12,
+      "citations": 27,
+      "environments": {
+        "figure": 1,
+        "equation": 8
+      }
+    },
+    "appendix/math-primer.tex": {
+      "target_only": true,
+      "math_regions": 62,
+      "math_kinds": {
+        "inline-dollar": 51,
+        "equation": 10,
+        "align": 1
+      },
+      "target_math_sha256": "949d850f89a2b4f8d3727e1ebf3a716566b2636278932986ef1d6537b3f26fbf",
+      "labels": 22,
+      "refs": 33,
+      "citations": 4,
+      "inputs": {},
+      "environments": {
+        "equation": 10,
+        "align": 1,
+        "enumerate": 1
+      }
+    }
+  },
+  "logs": {
+    "baseline": {
+      "fatal": 0,
+      "undefined_references": 0,
+      "undefined_citations": 0,
+      "missing_files": 0,
+      "fancyhdr": 155,
+      "overfull_hbox": 16,
+      "underfull_hbox": 28,
+      "overfull_vbox": 0,
+      "underfull_vbox": 36,
+      "latex_warnings": 4,
+      "font_warnings": 2,
+      "fontspec_warnings": 0,
+      "missing_characters": 0
+    },
+    "target": {
+      "fatal": 0,
+      "undefined_references": 0,
+      "undefined_citations": 0,
+      "missing_files": 0,
+      "fancyhdr": 135,
+      "overfull_hbox": 6,
+      "underfull_hbox": 29,
+      "overfull_vbox": 0,
+      "underfull_vbox": 23,
+      "latex_warnings": 3,
+      "font_warnings": 0,
+      "fontspec_warnings": 2,
+      "missing_characters": 3
+    },
+    "delta": {
+      "fatal": 0,
+      "undefined_references": 0,
+      "undefined_citations": 0,
+      "missing_files": 0,
+      "fancyhdr": -20,
+      "overfull_hbox": -10,
+      "underfull_hbox": 1,
+      "overfull_vbox": 0,
+      "underfull_vbox": -13,
+      "latex_warnings": -1,
+      "font_warnings": -2,
+      "fontspec_warnings": 2,
+      "missing_characters": 3
+    }
+  }
+}
