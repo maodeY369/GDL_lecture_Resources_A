@@ -1,4 +1,4 @@
-# Geometric Deep Learning 学习资源与中文翻译
+# Geometric Deep Learning 学习资源与中文
 
 本仓库整理了论文 **Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges** 的英文材料、简体中文翻译、可编译 LaTeX 源文件及翻译质量检查资料，供几何深度学习相关课程、阅读和术语对照使用。
 
